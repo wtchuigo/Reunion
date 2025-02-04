@@ -1,0 +1,43 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+			http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+			http://www.liquibase.org/xml/ns/dbchangelog-ext
+			http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet id="1" author="wtchuigo">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="Members" />
+			</not>
+		</preConditions>
+		<createTable tableName="Members">
+			<column name="id" type="INT" autoIncrement="true">
+				<constraints primaryKey="true"
+					primaryKeyName="members_pk" nullable="false" />
+			</column>
+			<column name="first_name" type="char(45)">
+				<constraints nullable="false" />
+			</column>
+			<column name="last_name" type="char(45)">
+				<constraints nullable="false" />
+			</column>
+			<column name="birthdate" type="Date" />
+			<column name="email" type="char(45)">
+				<constraints nullable="false" />
+			</column>
+			<column name="phone" type="char(45)" />
+			<column name="role" type="char(45)" />
+			<column name="Hosting_date" type="Date" />
+			<column name="create_date" type="Date" />
+			<column name="last_update" type="Date" />
+			<column name="address_fk" type="INT" />
+		</createTable>
+		<addForeignKeyConstraint
+			constraintName="members_address_fk" baseTableName="Members"
+			baseColumnNames="address_fk" onDelete="CASCADE"
+			referencedTableName="Addresses" referencedColumnNames="id" />
+	</changeSet>
+</databaseChangeLog>
