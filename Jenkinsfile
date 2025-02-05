@@ -1,10 +1,11 @@
 pipeline {
-    agent any 
+    agent {
+        label 'maven-java17'
+    } 
     stages {
-        stage('Compile and Clean') { 
+         stage('Clean and Install') {
             steps {
-
-                bat "mvn clean compile"
+                bat 'mvn clean install'
             }
         }
         stage('Test') { 
