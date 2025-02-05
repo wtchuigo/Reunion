@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'maven-java17'
-    } 
+    agent any
     stages {
          stage('Clean and Install') {
             steps {
