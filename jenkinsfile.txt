@@ -1,12 +1,5 @@
 pipeline {
     agent any 
-    stages {
-    	// Checkout the repository
-        stage ('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Compile and Clean') { 
             steps {
 
