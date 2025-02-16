@@ -10,7 +10,7 @@ pipeline {
             }
         }
         //SonarQube
-        stage('Sonar Scan with Quality Gate'){
+        stage {
             stage('Scan') {
                 steps {
                     withSonarQubeEnv(installationName: 'sq1') {
