@@ -1,11 +1,24 @@
 pipeline {
     agent any
+    environment {    
+		POM_PATH = 'pom.xml'
+    }
     stages {
          stage('package') {
             steps {
                 bat 'mvn package'
             }
         }
+        //SonarQube
+        stage('Sonar Scan with Quality Gate'){
+            stage('Scan') {
+                steps {
+                    withSonarQubeEnv(installationName: 'sq1') {
+                        bat './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+                    }
+		        }
+		    }
+		}
         stage('Test') { 
             steps {
                 bat "mvn test site"
