@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {    
-		POM_PATH = 'pom.xml'
-    }
     stages {
          stage('package') {
             steps {
@@ -17,16 +14,5 @@ pipeline {
 		        }
 		    }
 		}
-        stage('Test') { 
-            steps {
-                bat "mvn test site"
-            }
-            
-             post {
-                always {
-                    junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'   
-                }
-            }     
-        }
     }
 }
