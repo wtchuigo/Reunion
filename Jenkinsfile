@@ -1,11 +1,7 @@
 pipeline {
     agent any
     stages {
-         stage('package') {
-            steps {
-                bat 'mvn package'
-            }
-        }
+         
         //SonarQube
             stage('Scan') {
                 steps {
@@ -14,5 +10,10 @@ pipeline {
 		        }
 		    }
 		}
+	    stage('package') {
+            steps {
+                bat 'mvn package'
+            }
+        }
     }
 }
