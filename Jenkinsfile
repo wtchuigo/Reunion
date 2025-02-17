@@ -11,7 +11,8 @@ pipeline {
             stage('Scan') {
                 steps {
                     withSonarQubeEnv(installationName: 'sq1') {
-                        bat 'mvn sonar:sonar'
+			    sonarWaitForQualityGate()
+                        // bat 'mvn sonar:sonar'
 		        }
 		    }
 		}
