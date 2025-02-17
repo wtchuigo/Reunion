@@ -1,22 +1,32 @@
 pipeline {
-    agent any 
+    agent any
     stages {
-        stage('Compile and Clean') { 
+	stage('Checkout') {
             steps {
-
-                bat "mvn clean compile"
+                // Checkout the code from the repository
+                checkout scm
             }
         }
-        stage('Test') { 
+	stage('package') {
             steps {
-                bat "mvn test site"
+                bat 'mvn clean compile'
             }
-            
-             post {
-                always {
-                    junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'   
+        }
+	stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv(installationName: 'sq1') {
+			script {
+                   	  if (env.BRANCH_NAME == 'develop') {
+                       		bat 'mvn sonar:sonar'
+	                    }
+			}
                 }
-            }     
+            }
+        }
+        stage("Quality gate") {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
         }
     }
 }
