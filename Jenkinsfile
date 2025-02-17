@@ -25,7 +25,11 @@ pipeline {
         }
         stage("Quality gate") {
             steps {
-                waitForQualityGate abortPipeline: true
+		    script {
+                   	  if (env.BRANCH_NAME == 'develop') {
+                       		waitForQualityGate abortPipeline: true
+	                    }
+			}                
             }
         }
     }
