@@ -1,21 +1,28 @@
 pipeline {
     agent any
     stages {
-	 stage('package') {
+	stage('Checkout') {
+            steps {
+                // Checkout the code from the repository
+                checkout scm
+            }
+        }
+	stage('package') {
             steps {
                 bat 'mvn clean compile'
             }
         }
-         
-        //SonarQube
-            stage('Scan') {
-                steps {
-                    withSonarQubeEnv(installationName: 'sq1') {
-                        bat 'mvn sonar:sonar'
-		        }
-		    }
-		}
-	    stage("Quality Gate") {
+	stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv(installationName: 'sq1') {
+			script {
+                   	  if (env.BRANCH_NAME == 'develop') {
+                       		bat 'mvn sonar:sonar'
+	                    } 
+                }
+            }
+        }
+        stage("Quality gate") {
             steps {
                 waitForQualityGate abortPipeline: true
             }
