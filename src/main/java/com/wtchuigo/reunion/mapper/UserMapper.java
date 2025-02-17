@@ -7,6 +7,7 @@ import com.wtchuigo.reunion.core.UserDto;
 import com.wtchuigo.reunion.model.User;
 
 @Mapper
+@SuppressWarnings("java:S106")
 public interface UserMapper {
 	
 	UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
