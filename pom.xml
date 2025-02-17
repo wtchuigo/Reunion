@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.wtchuigo</groupId>
 	<artifactId>reunion</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>reunion</name>
 	<description>gestion de la reunion</description>
 	<url />
