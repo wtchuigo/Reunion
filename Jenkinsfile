@@ -11,9 +11,12 @@ pipeline {
             stage('Scan') {
                 steps {
                     withSonarQubeEnv(installationName: 'sq1') {
-			    sonarWaitForQualityGate()
-                        // bat 'mvn sonar:sonar'
+                        bat 'mvn sonar:sonar'
 		        }
+			def qualitygate = waitForQualityGate()
+         if (qualitygate.status = "OK") {
+            error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+         }
 		    }
 		}
     }
