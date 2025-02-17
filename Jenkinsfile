@@ -18,7 +18,8 @@ pipeline {
 			script {
                    	  if (env.BRANCH_NAME == 'develop') {
                        		bat 'mvn sonar:sonar'
-	                    } 
+	                    }
+			}
                 }
             }
         }
