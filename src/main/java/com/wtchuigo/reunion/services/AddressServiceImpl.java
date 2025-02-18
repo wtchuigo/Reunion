@@ -2,17 +2,18 @@ package com.wtchuigo.reunion.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wtchuigo.reunion.model.Address;
 import com.wtchuigo.reunion.repositories.AddressRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 	
-	@Autowired
-	private AddressRepository addressRepository;
+	private final AddressRepository addressRepository;
 
 	@Override
 	public void save(Address address) {
