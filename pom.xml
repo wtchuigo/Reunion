@@ -36,6 +36,8 @@
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 		<instancio-junit.version>4.7.0</instancio-junit.version>
 		<springdoc-openapi-starter-webmvc-ui.version>2.0.0</springdoc-openapi-starter-webmvc-ui.version>
+		<maven.jacoco.version>0.8.11</maven.jacoco.version>
+		<jacoco.reportFile>target/jacoco-ut.exec</jacoco.reportFile>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -136,9 +138,54 @@
 			<version>${instancio-junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>${maven.jacoco.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <argLine>-Xmx1G @{jacoco.agent.ut.arg}</argLine>
+                        <excludedGroups>IntegrationTest</excludedGroups>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${maven.jacoco.version}</version>
+                    <executions>
+                        <execution>
+                            <id>prepare-unit-test-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                            <configuration>
+                                <destFile>${jacoco.reportFile}</destFile>
+                                <propertyName>jacoco.agent.ut.arg</propertyName>
+                                <append>true</append>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>post-unit-test</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <dataFile>${jacoco.reportFile}</dataFile>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -184,13 +231,41 @@
 				</configuration>
 			</plugin>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
-                <configuration>
-                    <argLine>--enable-preview</argLine>
-                </configuration>
-            </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>-Xmx1G @{jacoco.agent.ut.arg}</argLine>
+					<excludedGroups>IntegrationTest</excludedGroups>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>${maven.jacoco.version}</version>
+				<executions>
+					<execution>
+						<id>prepare-unit-test-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<destFile>${jacoco.reportFile}</destFile>
+							<propertyName>jacoco.agent.ut.arg</propertyName>
+							<append>true</append>
+						</configuration>
+					</execution>
+					<execution>
+						<id>post-unit-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<dataFile>${jacoco.reportFile}</dataFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
