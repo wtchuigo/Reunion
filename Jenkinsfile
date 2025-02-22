@@ -18,7 +18,7 @@ pipeline {
                 withSonarQubeEnv(installationName: 'sq1') {
 			script {
                    	  if (env.BRANCH_NAME == 'develop') {
-                       		bat 'mvn sonar:sonar'
+                       		bat 'mvn sonar:sonar -Dsonar.projectKey=jenkins-reunion-key -Dsonar.projectName='jenkins-reunion''
 	                    }
 					}
                 }
