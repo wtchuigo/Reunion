@@ -18,7 +18,7 @@ pipeline {
                 withSonarQubeEnv(installationName: 'sq1') {
 			script {
                    	  if (env.BRANCH_NAME == 'develop') {
-                       		bat 'mvn sonar:sonar -Dsonar.coverage.jacoco.xmlReportPaths=/Users/Tchuigoua/java17/reunion/target/site/jacoco/jacoco.xml'
+                       		bat 'mvn sonar:sonar'
 	                    }
 					}
                 }
