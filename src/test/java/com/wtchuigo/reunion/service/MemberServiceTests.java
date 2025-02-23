@@ -70,5 +70,14 @@ public class MemberServiceTests extends BaseTest {
 		// Assert: Verify the method was called once but didn´t execute
         verify(memberRepository, times(1)).deleteById(anyInt());
 	}
+	
+	@Test
+	void testExistsById() {
+		when(memberRepository.existsById(anyInt())).thenReturn(true);
+		
+		Assertions.assertTrue(memberService.existsById(anyInt()));
+		// Assert: Verify the method was called once
+        verify(memberRepository, times(1)).existsById(anyInt());
+	}
 
 }

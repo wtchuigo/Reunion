@@ -10,13 +10,15 @@ import com.wtchuigo.reunion.model.Address;
 import com.wtchuigo.reunion.repositories.AddressRepository;
 import com.wtchuigo.reunion.repositories.MemberRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@RequiredArgsConstructor
 public class LoadDatabase implements CommandLineRunner {
 	
-	@Autowired
-	private MemberRepository memberRepository;
-	@Autowired
-	private AddressRepository addressRepository;
+	private final MemberRepository memberRepository;
+	
+	private final AddressRepository addressRepository;
 
 	private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
