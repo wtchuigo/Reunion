@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,13 +22,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.wtchuigo.reunion.BaseTest;
 import com.wtchuigo.reunion.core.MemberDto;
+import com.wtchuigo.reunion.exceptions.ReunionException;
 import com.wtchuigo.reunion.mapper.MemberMapper;
 import com.wtchuigo.reunion.model.Member;
 import com.wtchuigo.reunion.repositories.MemberRepository;
 import com.wtchuigo.reunion.services.MemberService;
 
 @SpringBootTest
-public class MemberServiceTests extends BaseTest {
+class MemberServiceTests extends BaseTest {
 	
 	@Autowired
 	MemberService memberService;
@@ -64,11 +66,21 @@ public class MemberServiceTests extends BaseTest {
 	
 	@Test
 	void testDelete() {
+		when(memberRepository.existsById(anyInt())).thenReturn(true);
 		doNothing().when(memberRepository).deleteById(anyInt());
 		
 		memberService.delete(anyInt());
 		// Assert: Verify the method was called once but didn´t execute
         verify(memberRepository, times(1)).deleteById(anyInt());
+	}
+	
+	@Test
+	void testDeleteThrowReunionException() {
+		when(memberRepository.existsById(anyInt())).thenReturn(false);
+		
+		Assertions.assertThrowsExactly(ReunionException.class, () -> memberService.delete(anyInt()));
+		// Assert: Verify the method was called once but didn´t execute
+        verify(memberRepository, never()).deleteById(anyInt());
 	}
 	
 	@Test

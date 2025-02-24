@@ -1,8 +1,6 @@
 package com.wtchuigo.reunion.controllers;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wtchuigo.reunion.core.AddressDto;
@@ -24,6 +21,7 @@ import com.wtchuigo.reunion.core.MemberModel;
 import com.wtchuigo.reunion.model.User;
 import com.wtchuigo.reunion.services.CustomUserDetailsService;
 import com.wtchuigo.reunion.services.MemberService;
+import com.wtchuigo.reunion.services.UserService;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +34,7 @@ public class ReunionController {
 
 	private final MemberService memberService;
 	private final AuthenticationManager authenticationManager;
-	private final CustomUserDetailsService userService;
+	private final UserService userService;
 	
 
 	@PostMapping("/register")

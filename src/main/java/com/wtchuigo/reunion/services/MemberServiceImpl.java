@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wtchuigo.reunion.core.MemberDto;
-import com.wtchuigo.reunion.exceptions.ResourceNotFoundException;
+import com.wtchuigo.reunion.exceptions.ReunionException;
 import com.wtchuigo.reunion.mapper.MemberMapper;
 import com.wtchuigo.reunion.model.Member;
 import com.wtchuigo.reunion.repositories.MemberRepository;
@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
-
 	private final MemberMapper memberMapper;
 
 	@Override
@@ -34,7 +33,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void delete(int id) {
 		if (!memberRepository.existsById(id)) {
-			throw new ResourceNotFoundException("No member found with the id: " + id);
+			throw new ReunionException("No member found with the id: " + id);
 		}
 		memberRepository.deleteById(id);
 	}
@@ -47,15 +46,14 @@ public class MemberServiceImpl implements MemberService {
 				list -> list.stream().forEach(member -> memerdto.add(memberMapper.memberToMemberDto(member))));
 		return memerdto;
 	}
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getCurrentDate() {
-	    return new Date();
+		return new Date();
 	}
 
 	@Override
 	public boolean existsById(int id) {
 		return memberRepository.existsById(id);
 	}
-
 }

@@ -23,7 +23,7 @@ import com.wtchuigo.reunion.repositories.AddressRepository;
 import com.wtchuigo.reunion.services.AddressService;
 
 @SpringBootTest
-public class AddressServiceTests extends BaseTest {
+class AddressServiceTests extends BaseTest {
 
 	@Autowired
 	AddressService addressService;
