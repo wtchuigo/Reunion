@@ -38,6 +38,7 @@
 		<springdoc-openapi-starter-webmvc-ui.version>2.0.0</springdoc-openapi-starter-webmvc-ui.version>
 		<maven.jacoco.version>0.8.11</maven.jacoco.version>
 		<jacoco.reportFile>target/jacoco-ut.exec</jacoco.reportFile>
+		<jacoco.agent.ut.arg></jacoco.agent.ut.arg>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -145,6 +146,10 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
+                    <configuration>
+                        <argLine>-Xmx1G @{jacoco.agent.ut.arg}</argLine>
+                        <excludedGroups>IntegrationTest</excludedGroups>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
@@ -193,6 +198,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>-Xmx1G @{jacoco.agent.ut.arg}</argLine>
+					<excludedGroups>IntegrationTest</excludedGroups>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
