@@ -48,8 +48,10 @@ class MemberServiceTests extends BaseTest {
 		List<MemberDto> memerdto = new ArrayList<MemberDto>();
 		Optional.ofNullable(members).ifPresent(
 				list -> list.stream().forEach(member -> memerdto.add(memberMapper.memberToMemberDto(member))));
-		assertThat(result.size()).isEqualTo(memerdto.size());
+		assertThat(result).hasSameSizeAs(memerdto);
 		Assertions.assertTrue(result.containsAll(memerdto));
+		// Assert: Verify the method was called once
+        verify(memberRepository, times(1)).findAll();
 		
 	}
 	
@@ -79,7 +81,7 @@ class MemberServiceTests extends BaseTest {
 		when(memberRepository.existsById(anyInt())).thenReturn(false);
 		
 		Assertions.assertThrowsExactly(ReunionException.class, () -> memberService.delete(anyInt()));
-		// Assert: Verify the method was called once but didn´t execute
+		// Assert: Verify the method was never called
         verify(memberRepository, never()).deleteById(anyInt());
 	}
 	
