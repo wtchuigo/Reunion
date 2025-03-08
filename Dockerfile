@@ -6,6 +6,6 @@ FROM openjdk:24-slim-bullseye
 
 WORKDIR /app
 
-COPY target/reunion-0.0.2-SNAPSHOT.jar /app/reunion-services.jar
+COPY --from=build /target/reunion-0.0.2-SNAPSHOT.jar /app/reunion-services.jar
 
 ENTRYPOINT ["java", "-jar", "/app/reunion-services.jar"]
