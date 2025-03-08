@@ -56,6 +56,10 @@ public class Member {
 
 	private String role;
 	
+	private String password;
+	
+	private String gender;
+	
 	@Column(name="hosting_date")
 	private Date hostingDate;
 

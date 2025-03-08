@@ -8,15 +8,15 @@
 			http://www.liquibase.org/xml/ns/dbchangelog-ext
 			http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 	<changeSet id="1" author="wtchuigo">
-		<preConditions onFail="MARK_RAN">
+	    <preConditions onFail="MARK_RAN">
 			<not>
-				<tableExists tableName="Members" />
+				<tableExists tableName="Users" />
 			</not>
 		</preConditions>
-		<createTable tableName="Members">
+		<createTable tableName="Users">
 			<column name="id" type="INT" autoIncrement="true">
 				<constraints primaryKey="true"
-					primaryKeyName="members_pk" nullable="false" />
+					primaryKeyName="roles_pk" nullable="false"/>
 			</column>
 			<column name="first_name" type="char(45)">
 				<constraints nullable="false" />
@@ -24,22 +24,11 @@
 			<column name="last_name" type="char(45)">
 				<constraints nullable="false" />
 			</column>
-			<column name="birthdate" type="Date" />
 			<column name="email" type="char(45)">
 				<constraints nullable="false" />
 			</column>
-			<column name="phone" type="char(45)" />
-			<column name="password" type="char(128)" />
-			<column name="gender" type="char(45)" />
-			<column name="role" type="char(45)" />
-			<column name="Hosting_date" type="Date" />
-			<column name="create_date" type="Date" />
+			<column name="role" type="char(45)"/>
 			<column name="last_update" type="Date" />
-			<column name="address_fk" type="INT" />
-		</createTable>
-		<addForeignKeyConstraint
-			constraintName="members_address_fk" baseTableName="Members"
-			baseColumnNames="address_fk" onDelete="CASCADE"
-			referencedTableName="Addresses" referencedColumnNames="id" />
+        </createTable>
 	</changeSet>
 </databaseChangeLog>

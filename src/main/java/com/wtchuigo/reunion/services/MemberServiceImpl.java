@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,9 +23,14 @@ public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
 	private final MemberMapper memberMapper;
+	private final PasswordEncoder passwordEncoder;
 
 	@Override
 	public void save(MemberDto memberDto) {
+		if (memberRepository.findByEmail(memberDto.getEmail()) != null) {
+			throw new ReunionException("User already registered");
+		}
+		memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
 		Member member = memberMapper.memberDtoToMember(memberDto);
 		member.setCreateDate(getCurrentDate());
 		memberRepository.save(member);

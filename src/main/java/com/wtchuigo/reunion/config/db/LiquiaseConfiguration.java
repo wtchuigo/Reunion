@@ -10,6 +10,15 @@ import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration
 public class LiquiaseConfiguration {
+	
+	@Bean
+    public SpringLiquibase liquibaseUsers(DataSource dataSource) {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setDataSource(dataSource);
+        liquibase.setChangeLog("classpath:db/changelog/masterdata/users.xml");
+
+        return liquibase;
+    }
 
     @Bean
     public SpringLiquibase liquibaseAddresses(DataSource dataSource) {

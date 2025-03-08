@@ -18,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.wtchuigo.reunion.BaseTest;
+import com.wtchuigo.reunion.core.AddressDto;
+import com.wtchuigo.reunion.mapper.AddressMapper;
 import com.wtchuigo.reunion.model.Address;
 import com.wtchuigo.reunion.repositories.AddressRepository;
 import com.wtchuigo.reunion.services.AddressService;
@@ -27,6 +29,8 @@ class AddressServiceTests extends BaseTest {
 
 	@Autowired
 	AddressService addressService;
+	@Autowired
+	private AddressMapper addressMapper;
 
 	@MockBean
 	AddressRepository addressRepository;
@@ -43,11 +47,10 @@ class AddressServiceTests extends BaseTest {
 	
 	@Test
 	void testSave() {
-		Optional<Address> address = Optional.of(Instancio.of(Address.class).create());
-		Address res = address.get();
-		when(addressRepository.save(any(Address.class))).thenReturn(res);
+		AddressDto address = Instancio.of(AddressDto.class).create();
+		when(addressRepository.save(any(Address.class))).thenReturn(addressMapper.addressDtoToAddress(address));
 		
-		addressService.save(res);
+		addressService.save(address);
 		// Assert: Verify the method was called once
         verify(addressRepository, times(1)).save(any(Address.class));
 	}

@@ -7,7 +7,8 @@
 			http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
 			http://www.liquibase.org/xml/ns/dbchangelog-ext
 			http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<include file="users.xml"/>
 	<include file="addresses.xml" relativeToChangelogFile="true"/>
-	<include file="hostings.xml" relativeToChangelogFile="true"/>
 	<include file="members.xml" relativeToChangelogFile="true"/>
+	
 </databaseChangeLog>

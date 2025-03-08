@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class MemberModel {
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@Past(message = "The date of birth must be in the past.")
 	private Date birthdate;
 
@@ -27,8 +27,12 @@ public class MemberModel {
 	private String phone;
 
 	private String role;
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+
+	private String password;
+
+	private String gender;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date hostingDate;
 
 	private String city;

@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.wtchuigo.reunion.model.User;
-import com.wtchuigo.reunion.repositories.UserRepository;
+import com.wtchuigo.reunion.model.Member;
+import com.wtchuigo.reunion.repositories.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,15 +17,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-	private final UserRepository userRepository;
+	private final MemberRepository memberRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		Member user = memberRepository.findByEmail(email);
 		if (user == null) {
-			throw new UsernameNotFoundException("User not found with username: " + username);
+			throw new UsernameNotFoundException("User not found with Email: " + email);
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
 				Collections.singletonList(new SimpleGrantedAuthority(user.getRole())));
 	}
 }

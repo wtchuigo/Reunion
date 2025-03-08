@@ -1,6 +1,5 @@
 package com.wtchuigo.reunion.core;
 
-
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -8,13 +7,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-	
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDto {
-	
+
 	private Long id;
 
 	private Date birthdate;
@@ -28,7 +26,11 @@ public class MemberDto {
 	private String phone;
 
 	private String role;
-	
+
+	private String password;
+
+	private String gender;
+
 	private Date hostingDate;
 
 	private AddressDto address;
