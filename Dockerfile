@@ -7,5 +7,6 @@ FROM openjdk:24-slim-bullseye
 WORKDIR /app
 
 COPY --from=build /target/reunion-0.0.2-SNAPSHOT.jar /app/reunion-services.jar
+EXPOSE 8070
 
 ENTRYPOINT ["java", "-jar", "/app/reunion-services.jar"]
